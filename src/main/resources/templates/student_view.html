@@ -39,13 +39,17 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>TEXT</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each="text : ${allText}">
-                <td th:text="${text}"></td>
+            <tr th:each="student: ${studentList}">
+                <td th:text="${student.getId()}"></td>
+                <td th:text="${student.getName()}"></td>
+                <td th:text="${student.getEmail()}"></td>
             </tr>
             </tbody>
         </table>
