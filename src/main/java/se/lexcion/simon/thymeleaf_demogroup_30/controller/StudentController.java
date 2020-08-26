@@ -2,8 +2,7 @@ package se.lexcion.simon.thymeleaf_demogroup_30.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import se.lexcion.simon.thymeleaf_demogroup_30.model.Student;
 
 import javax.annotation.PostConstruct;
@@ -28,9 +27,37 @@ public class StudentController {
 
     @GetMapping()
     public String getAll(Model model){
-        model.addAttribute(students);
+        model.addAttribute("studentList", students);
 
         return "student_view";
+    }
+
+    @GetMapping("/register")
+    public String registerView(Model model){
+
+        Student student = new Student();
+
+        model.addAttribute("student", student);
+
+        return "register_form";
+    }
+
+    @PostMapping("/add")
+    public String addStudent(@ModelAttribute Student student){
+
+        students.add(student);
+
+        return "redirect:/student";
+
+    }
+
+
+    @GetMapping("/deleteById/{id}")
+    public String deleteById(@PathVariable("id") Integer id){
+
+        students.removeIf(student -> student.getId() == id);
+
+        return "redirect:/student";
     }
 
 
