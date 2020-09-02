@@ -2,10 +2,13 @@ package se.lexcion.simon.thymeleaf_demogroup_30.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import se.lexcion.simon.thymeleaf_demogroup_30.dto.StudentDto;
 import se.lexcion.simon.thymeleaf_demogroup_30.model.Student;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,18 +38,21 @@ public class StudentController {
     @GetMapping("/register")
     public String registerView(Model model){
 
-        Student student = new Student();
-
-        model.addAttribute("student", student);
+        model.addAttribute("student", new StudentDto());
 
         return "register_form";
     }
 
     @PostMapping("/add")
-    public String addStudent(@ModelAttribute Student student){
+    public String addStudent(@Valid @ModelAttribute("student") StudentDto dto, BindingResult bindingResult){
 
-        students.add(student);
+        if (bindingResult.hasErrors()){
+            return "register_form";
+        }else{
+            Student student = new Student(dto.getName(), dto.getEmail());
 
+            students.add(student);
+        }
         return "redirect:/student";
 
     }
