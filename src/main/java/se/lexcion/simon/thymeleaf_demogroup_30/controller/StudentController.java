@@ -27,7 +27,7 @@ public class StudentController {
 
     @GetMapping()
     public String getAll(Model model){
-        model.addAttribute("studentList", students);
+        model.addAttribute(students);
 
         return "student_view";
     }
@@ -59,8 +59,5 @@ public class StudentController {
 
         return "redirect:/student";
     }
-
-
-
 
 }
